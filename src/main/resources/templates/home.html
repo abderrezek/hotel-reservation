@@ -1,12 +1,68 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout ::common_header(~{::title}, ~{}, ~{})">
+<head th:replace="layout/layout ::common_header(~{::title}, ~{::links}, ~{})">
 	<title th:fragment="title">Chez soi</title>
+	
+	<style th:fragment="links">
+ 		#main {
+ 			height: 500px;
+ 			background: url([[@{/img/cover.jpg}]]) no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+ 		}
+	</style>
+	<link th:fragment="links" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
-<body th:replace="layout/layout :: common_body(~{::content}, ~{}, ~{})">
+<body th:replace="layout/layout :: common_body('accueil', ~{::content}, ~{}, ~{::script})">
 
 	<div th:fragment="content">
-		Home page
+		<!-- start header -->
+		<div
+			id="main"
+			class="flex flex-col items-center justify-center"
+		>
+			<div>
+				<div class="text-white text-5xl uppercase text-center mb-10">
+					<p class="font-light">se sentir toujours</p>
+					<p class="font-extrabold">chez soi</p>
+				</div>
+				
+				<div class="relative py-5 px-2.5 w-full border-2 border-white border-solid">
+					<div class="z-10 absolute inset-0 bg-white opacity-10"></div>
+					
+					<form action="#" th:action="@{/}" class="z-20 relative mb-0 flex items-end justify-center flex-wrap space-x-2 lg:space-x-3" method="get">
+						<div class="flex flex-col">
+							<label for="arrivee">Arrivée</label>
+							<input class="text-sm" id="arrivee" name="arrivee" placeholder="YYYY-MM-DD" required>
+						</div>
+						<div class="flex flex-col">
+							<label for="depart">Départ</label>
+							<input class="text-sm" id="depart" name="depart" placeholder="YYYY-MM-DD" required>
+						</div>
+						<div class="flex flex-col w-16">
+							<label for="adultes">Adultes</label>
+							<input class="text-sm" id="adultes" name="adultes" type="number" min="0" value="1" required>
+						</div>
+						<div class="flex flex-col w-16">
+							<label for="enfants">Enfants</label>
+							<input class="text-sm" id="enfants" name="enfants" type="number" min="0" value="0" required>
+						</div>
+						<div class="flex flex-col w-32">
+							<label>&nbsp;</label>
+							<button type="submit" class="focus:outline-none text-sm font-bold bg-yellow-500 py-2 px-1.5">
+								Rechercher
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- end header -->
 	</div>
 	
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+	<script th:src="@{/js/home.js}"></script>
 </body>
 </html>

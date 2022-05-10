@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer utilities { */
-/*   [x-cloak] { */
-/*     display: none; */
-/*   } */
-/* } */
+@layer utilities {
+  [x-cloak] {
+    display: none;
+  }
+}

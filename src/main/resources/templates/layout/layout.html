@@ -8,12 +8,21 @@
     <title th:replace="${title}"></title>
     
     <link rel="stylesheet" th:href="@{/css/application.css}">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>    
     <th:block th:replace="${links}" />
     <th:block th:replace="${scripts}" />
 </head>
-<body class="h-screen" th:fragment="common_body(content, modals, scripts)">
+<body class="h-screen" th:fragment="common_body(activeNav, content, modals, scripts)">
+	<!-- navbar -->
+	<div th:replace="fragments/navbar :: navbar(${activeNav})"></div>
+	
+	<!-- content page -->
 	<div th:replace="${content}"></div>
-
+	
+	<!-- footer -->
+	<div th:replace="fragments/footer"></div>
+	
+	<!-- modals-->
 	<th:block th:replace="${modals}" />
 	
 	<script th:src="@{/js/main.js}"></script>

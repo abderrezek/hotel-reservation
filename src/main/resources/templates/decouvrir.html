@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout ::common_header(~{::title}, ~{::links}, ~{})">
+	<title th:fragment="title">Découvrir</title>
+	<style th:fragment="links">
+		#explorer {
+			background: url([[@{/img/explorer.jpg}]]) no-repeat;
+			background-attachment: fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			object-position: 50% 0%;
+		}
+	</style>
+</head>
+<body th:replace="layout/layout :: common_body('decouvrir', ~{::content}, ~{}, ~{})">
+
+	<div th:fragment="content">
+		<div class="container mx-auto">
+			<div class="py-4 space-y-8 text-center">
+				<div>
+					<h3 class="text-xl uppercase font-meduim mb-3">notre hôtel</h3>
+					<p>Paragraphe. Cliquez ici pour ajouter votre propre texte. Cliquez sur "Modifier Texte" ou double-cliquez ici pour ajouter votre contenu et personnaliser les polices. Relatez ici votre parcours et présentez votre activité à vos visiteurs.</p>
+				</div>
+				
+				<div>
+					<h3 class="text-xl uppercase font-meduim mb-5">services</h3>
+					<div class="flex items-center justify-center space-x-6">
+						<div class="flex flex-col items-center">
+							<img th:src="@{/img/services.png}" class="w-12 h-12 object-contain object-[center_center]" />
+							<div class="w-12 bg-black h-px mt-6 mb-3"></div>
+							<span>Services d'entretien</span>
+						</div>
+						<div class="flex flex-col items-center">
+							<img th:src="@{/img/parking.png}" class="w-12 h-12 object-contain object-[center_center]" />
+							<div class="w-12 bg-black h-px mt-6 mb-3"></div>
+							<span>Parking gratuit</span>
+						</div>
+						<div class="flex flex-col items-center">
+							<img th:src="@{/img/meuble.png}" class="w-12 h-12 object-contain object-[center_center]" />
+							<div class="w-12 bg-black h-px mt-6 mb-3"></div>
+							<span>Meublé</span>
+						</div>
+						<div class="flex flex-col items-center">
+							<img th:src="@{/img/wifi.png}" class="w-12 h-12 object-contain object-[center_center]" />
+							<div class="w-12 bg-black h-px mt-6 mb-3"></div>
+							<span>WiFi gratuit</span>
+						</div>
+						<div class="flex flex-col items-center">
+							<img th:src="@{/img/aeroport.png}" class="w-12 h-12 object-contain object-[center_center]" />
+							<div class="w-12 bg-black h-px mt-6 mb-3"></div>
+							<span>Navette aéroport</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="explorer" class="py-12 text-center">
+			<h2 class="font-bold text-4xl md:text-7xl uppercase text-white mb-12">explorer</h2>
+			
+			<div class="bg-white py-5">
+				<div class="container mx-auto">
+					<h3 class="uppercase text-md mb-4">découvrir la ville</h3>
+					<div class="flex items-center justify-center space-x-4">
+						<div class="border border-black p-1.5">
+							<img th:src="@{/img/chinatown.jpg}" class="w-full h-40 object-cover object-[50%_50%]" />
+							<h3 class="text-lg my-6">Chinatown</h3>
+							<p class="font-light text-xs">Paragraphe. Cliquez ici pour ajouter votre propre texte. Relatez ici votre parcours et présentez votre activité à vos visiteurs.</p>
+						</div>
+						<div class="border border-black p-1.5">
+							<img th:src="@{/img/quartier.jpg}" class="w-full h-40 object-cover object-[50%_50%]" />
+							<h3 class="text-lg my-6">Quartier Haight et Ashbury</h3>
+							<p class="font-light text-xs">Paragraphe. Cliquez ici pour ajouter votre propre texte. Relatez ici votre parcours et présentez votre activité à vos visiteurs.</p>
+						</div>
+						<div class="border border-black p-1.5">
+							<img th:src="@{/img/pont.jpg}" class="w-full h-40 object-cover object-[50%_50%]" />
+							<h3 class="text-lg my-6">Pont du Golden Gate</h3>
+							<p class="font-light text-xs">Paragraphe. Cliquez ici pour ajouter votre propre texte. Relatez ici votre parcours et présentez votre activité à vos visiteurs.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
