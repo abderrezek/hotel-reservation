@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_header(title, links, scripts)">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+    <title th:replace="${title}"></title>
+    
+    <link rel="stylesheet" th:href="@{/css/application.css}">
+    <th:block th:replace="${links}" />
+    <th:block th:replace="${scripts}" />
+</head>
+<body class="h-screen" th:fragment="common_body(content, modals, scripts)">
+	<div th:replace="${content}"></div>
+
+	<th:block th:replace="${modals}" />
+	
+	<script th:src="@{/js/main.js}"></script>
+	<th:block th:replace="${scripts}" />	
+</body>
+</html>

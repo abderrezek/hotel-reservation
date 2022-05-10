@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout ::common_header(~{::title}, ~{}, ~{})">
+	<title th:fragment="title">Chez soi</title>
+</head>
+<body th:replace="layout/layout :: common_body(~{::content}, ~{}, ~{})">
+
+	<div th:fragment="content">
+		Home page
+	</div>
+	
+</body>
+</html>
