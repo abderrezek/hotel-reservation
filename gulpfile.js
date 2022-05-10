@@ -18,6 +18,11 @@ gulp.task('watch', () => {
 
     gulp.watch(['src/main/resources/**/*.html'], gulp.series('copy-html+css-and-reload'));
     gulp.watch(['src/main/resources/**/*.svg'], gulp.series('copy-svg+css-and-reload'));
+    gulp.watch([
+		'src/main/resources/**/*.jpg',
+		'src/main/resources/**/*.png'
+	],
+	gulp.series('copy-image-and-reload'));
     gulp.watch(['src/main/resources/**/*.css'], gulp.series('copy-css-and-reload'));
     gulp.watch(['src/main/resources/**/*.js'], gulp.series('copy-js-and-reload'));
 });
@@ -44,14 +49,18 @@ gulp.task('copy-js', () =>
 gulp.task('copy-svg', () => gulp.src(['src/main/resources/**/*.svg'])
     .pipe(gulp.dest('target/classes/')));
 
+gulp.task('copy-image', () => gulp.src(['src/main/resources/**/*.jpg', 'src/main/resources/**/*.png'])
+	.pipe(gulp.dest('target/classes/')));
+
 // When the HTML or SVG changes, we need to copy the CSS also because
 // the Tailwind CSS JIT compiler might generate new CSS
 gulp.task('copy-html+css-and-reload', gulp.series('copy-html', 'copy-css', reload));
 gulp.task('copy-css-and-reload', gulp.series('copy-css', reload));
 gulp.task('copy-js-and-reload', gulp.series('copy-js', reload));
 gulp.task('copy-svg+css-and-reload', gulp.series('copy-svg', 'copy-css', reload));
+gulp.task('copy-image-and-reload', gulp.series('copy-image', reload));
 
-gulp.task('build', gulp.series('copy-html', 'copy-css', 'copy-js', 'copy-svg'));
+gulp.task('build', gulp.series('copy-html', 'copy-css', 'copy-js', 'copy-svg', 'copy-image'));
 gulp.task('default', gulp.series('watch'));
 
 function reload(done) {
