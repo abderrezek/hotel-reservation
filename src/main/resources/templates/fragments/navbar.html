@@ -14,22 +14,22 @@
 	    <div class="w-full md:block md:w-auto" :class="isVisible() ? '' : 'hidden'" x-cloak>
 	    	<ul class="flex flex-col mt-4 md:flex-row md:space-x-4 md:mt-0 md:text-sm md:font-light">
 	    		<li>
-	    			<a th:href="@{/}" th:classappend="${activeNav == 'accueil'} ? 'text-white'" class="block py-1 px-1.5 transition duration-150 ease-linear hover:text-white">
+	    			<a th:href="${activeNav == 'accueil'} ? '#' : @{/}" th:classappend="${activeNav == 'accueil'} ? 'text-white'" class="block py-1 px-1.5 transition duration-150 ease-linear hover:text-white">
 	    				accueil
 	    			</a>
 	    		</li>
 	    		<li>
-	    			<a th:href="@{/decouvrir}" th:classappend="${activeNav == 'decouvrir'} ? 'text-white'" class="block py-1 px-1.5 transition duration-150 ease-linear hover:text-white">
+	    			<a th:href="${activeNav == 'decouvrir'} ? '#' : @{/decouvrir}" th:classappend="${activeNav == 'decouvrir'} ? 'text-white'" class="block py-1 px-1.5 transition duration-150 ease-linear hover:text-white">
 	    				découvrir
 	    			</a>
 	    		</li>
 	    		<li>
-	    			<a href="#" th:classappend="${activeNav == 'chambres'} ? 'text-white'" class="block py-1 px-1.5 transition duration-150 ease-linear hover:text-white">
+	    			<a th:href="${activeNav == 'chambres'} ? '#' : @{/chambres}" th:classappend="${activeNav == 'chambres'} ? 'text-white'" class="block py-1 px-1.5 transition duration-150 ease-linear hover:text-white">
 	    				chambres
 	    			</a>
 	    		</li>
 	    		<li>
-	    			<a th:href="@{/contact}" th:classappend="${activeNav == 'contact'} ? 'text-white'" class="block py-1 px-1.5 transition duration-150 ease-linear hover:text-white">
+	    			<a th:href="${activeNav == 'contact'} ? '#' : @{/contact}" th:classappend="${activeNav == 'contact'} ? 'text-white'" class="block py-1 px-1.5 transition duration-150 ease-linear hover:text-white">
 	    				contact
 	    			</a>
 	    		</li>

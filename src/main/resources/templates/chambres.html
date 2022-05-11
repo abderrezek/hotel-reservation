@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout ::common_header(~{::title}, ~{::links}, ~{})">
+	<title th:fragment="title">Chambres</title>
+	<style th:fragment="links">
+		#se-loger {
+			background: url([[@{/img/se-loger.jpg}]]) no-repeat;
+			background-attachment: fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			object-position: 50% 0%;
+		}
+	</style>
+	<link th:fragment="links" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body th:replace="layout/layout :: common_body('chambres', ~{::content}, ~{}, ~{::script})">
+
+	<div th:fragment="content">
+		<div class="container mx-auto">
+			<div class="text-center my-8">
+				<h3 class="uppercase text-lg mb-3">chambres</h3>
+				<p class="font-light">Paragraphe. Cliquez ici pour ajouter votre propre texte. Cliquez sur "Modifier Texte" ou double-cliquez ici pour ajouter votre contenu et personnaliser les polices. Déplacez-moi où vous le souhaitez sur votre page. Expliquez ici votre parcours et présentez votre activité à vos visiteurs.</p>
+			</div>
+		</div>
+		<div id="se-loger" class="py-12">
+			<h2 class="text-center font-bold text-4xl md:text-7xl uppercase text-white mb-12">se loger</h2>
+			
+			<div class="bg-white py-5">
+				<div class="container mx-auto">
+					<div>
+						<h3 class="mb-1.5 text-2xl">Nos chambres</h3>
+						<div class="h-px bg-black"></div>					
+						<form class="my-2 flex flex-col sm:flex-row items-stretch justify-center" method="get">
+							<input class="flex-1 text-sm" id="arrivee" name="arrivee" placeholder="YYYY-MM-DD" required>
+							<input class="flex-1 text-sm" id="depart" name="depart" placeholder="YYYY-MM-DD" required>
+							<input class="flex-1 text-sm" id="adultes" name="adultes" type="number" min="0" value="1" required>
+							<input class="flex-1 text-sm" id="enfants" name="enfants" type="number" min="0" value="0" required>
+							<button type="submit" class="flex-1 focus:outline-none text-sm font-bold bg-yellow-500 py-2 px-1.5">
+								Rechercher
+							</button>
+						</form>
+						<div class="h-px bg-black"></div>
+						<div th:fragment="list-chambres" class="mt-4">
+							<div th:replace="fragments/chambre :: item(
+								img=@{/img/suite-junior.jpg},
+								title='Suite Junior',
+								desc='Notre suite junior vous offre une vue imprenable sur la ville.',
+								taille='260 ft2',
+								lits='2 Lit(s) Double(s)'
+							)"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+	<script th:src="@{/js/dates.js}"></script>
+</body>
+</html>
