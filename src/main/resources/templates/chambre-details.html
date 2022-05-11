@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout ::common_header(~{::title}, ~{::links}, ~{})">
+	<title th:fragment="title" th:text="|Chambre: ${chambre.nom}|">Chambre</title>
+	<style th:fragment="links">
+		#se-loger {
+			background: url([[@{/img/se-loger.jpg}]]) no-repeat;
+			background-attachment: fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			object-position: 50% 0%;
+		}
+	</style>
+	<link th:fragment="links" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body th:replace="layout/layout :: common_body('', ~{::content}, ~{}, ~{::script})">
+
+	<div th:fragment="content">
+		<div id="se-loger" class="py-12">
+			<h2 class="text-center font-bold text-4xl md:text-7xl uppercase text-white mb-12">se loger</h2>
+				
+			<div class="bg-white">
+				<div class="container mx-auto">
+					<span th:text="${chambre.nom}"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+	<script th:src="@{/js/dates.js}"></script>
+</body>
+</html>

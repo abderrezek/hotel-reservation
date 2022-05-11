@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout ::common_header(~{::title}, ~{}, ~{})">
+	<title th:fragment="title">Page non trouvée</title>
+</head>
+<body th:replace="layout/layout :: common_body('', ~{::content}, ~{}, ~{})">
+
+	<div th:fragment="content">
+		<h1 class="text-center text-4xl font-bold my-12">
+			404 Page non trouvée
+		</h1>
+	</div>
+	
+</body>
+</html>
