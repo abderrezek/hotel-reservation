@@ -12,8 +12,8 @@
 			background-size: cover;
  		}
 	</style>
-<!-- 	<link th:fragment="links" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
-	<link th:fragment="links" rel="stylesheet" th:href="@{/css/flatpickr.min.css}">
+	<link th:fragment="links" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<!-- 	<link th:fragment="links" rel="stylesheet" th:href="@{/css/flatpickr.min.css}"> -->
 </head>
 <body th:replace="layout/layout :: common_body('accueil', ~{::content}, ~{}, ~{::script})">
 
@@ -32,28 +32,64 @@
 				<div class="relative py-5 px-2.5 w-full border-2 border-white border-solid">
 					<div class="z-10 absolute inset-0 bg-white opacity-10"></div>
 					
-					<form action="#" th:action="@{/}" method="post" class="z-20 relative mb-0 flex items-end justify-center flex-wrap space-x-2 lg:space-x-3">
-						<div class="flex flex-col">
-							<label for="arrivee">Arrivée</label>
-							<input class="text-sm" id="arrivee" name="arrivee" placeholder="YYYY-MM-DD" required>
-						</div>
-						<div class="flex flex-col">
-							<label for="depart">Départ</label>
-							<input class="text-sm" id="depart" name="depart" placeholder="YYYY-MM-DD" required>
-						</div>
-						<div class="flex flex-col w-16">
-							<label for="adultes">Adultes</label>
-							<input class="text-sm" id="adultes" name="adultes" type="number" min="0" value="1" required>
-						</div>
-						<div class="flex flex-col w-16">
-							<label for="enfants">Enfants</label>
-							<input class="text-sm" id="enfants" name="enfants" type="number" min="0" value="0" required>
-						</div>
-						<div class="flex flex-col w-32">
-							<label>&nbsp;</label>
-							<button type="submit" class="focus:outline-none text-sm font-bold bg-yellow-500 py-2 px-1.5">
-								Rechercher
-							</button>
+					<form
+						action="#"
+						th:action="@{/}"
+						th:object="${chambre}"
+						method="post"
+						class="mb-0"
+					>
+						<th:block th:replace="fragments/forms :: fielderrors" />
+					
+						<div class="z-20 relative flex items-start justify-center flex-wrap space-x-2 lg:space-x-3">
+							<div class="flex flex-col">
+								<label for="arrivee">Arrivée</label>
+								<input
+									class="text-sm"
+									th:field="*{arrivee}"
+									placeholder="DD/MM/YYYY" 
+									required
+									th:classappend="${#fields.hasErrors('arrivee')} ? 'border-2 border-red-300 focus:border-red-300 focus:ring-red-500'"
+								>
+							</div>
+							<div class="flex flex-col">
+								<label for="depart">Départ</label>
+								<input
+									class="text-sm"
+									th:field="*{depart}"
+									placeholder="DD/MM/YYYY"
+									required
+									th:classappend="${#fields.hasErrors('depart')} ? 'border-2 border-red-300 focus:border-red-300 focus:ring-red-500'"
+								>
+							</div>
+							<div class="flex flex-col w-16">
+								<label for="adultes">Adultes</label>
+								<input
+									class="text-sm"
+									th:field="*{adultes}"
+									type="number"
+									min="1"
+									th:classappend="${#fields.hasErrors('adultes')} ? 'border-2 border-red-300 focus:border-red-300 focus:ring-red-500'"
+									required
+								>
+							</div>
+							<div class="flex flex-col w-16">
+								<label for="enfants">Enfants</label>
+								<input
+									class="text-sm"
+									th:field="*{enfants}"
+									type="number"
+									min="0"
+									required
+									th:classappend="${#fields.hasErrors('enfants')} ? 'border-2 border-red-300 focus:border-red-300 focus:ring-red-500'"
+								>
+							</div>
+							<div class="flex flex-col w-32">
+								<label>&nbsp;</label>
+								<button type="submit" class="focus:outline-none text-sm font-bold bg-yellow-500 py-2 px-1.5">
+									Rechercher
+								</button>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -62,10 +98,10 @@
 		<!-- end header -->
 	</div>
 	
-	<script th:src="@{/js/flatpickr/flatpickr.min.js}"></script>
-	<script th:src="@{/js/flatpickr/fr.js}"></script>
-<!-- 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
-<!-- 	<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script> -->
+<!-- 	<script th:src="@{/js/flatpickr/flatpickr.min.js}"></script> -->
+<!-- 	<script th:src="@{/js/flatpickr/fr.js}"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
 	<script th:src="@{/js/dates.js}"></script>
 </body>
 </html>

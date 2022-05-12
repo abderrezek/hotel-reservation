@@ -1,7 +1,7 @@
 package com.abderrezek.hotelreservations.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,11 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.abderrezek.hotelreservations.entity.Chambre;
+import com.abderrezek.hotelreservations.form.SearchForm;
 import com.abderrezek.hotelreservations.service.IChambreService;
 
 import lombok.AllArgsConstructor;
@@ -26,13 +30,21 @@ public class ChambresController {
 	private final IChambreService chambreService;
 
 	@GetMapping(path = "/chambres")
-	public String index(Pageable pageable, Model model, HttpServletRequest request) {
+	public Object index(Pageable pageable, Model model, HttpServletRequest request) {
+		SearchForm searchForm = new SearchForm(null, null, 1, 0);
+		if (model.getAttribute("chambreForm") != null) {
+			searchForm = (SearchForm) model.getAttribute("chambreForm");
+		}
+		model.addAttribute("chambre", searchForm);
+		
 		//List<Chambre> chambres = chambreService.getAll();
 		Page<Chambre> chambres = chambreService.getAll(pageable);
-		boolean isAjax = isAjax(request);
 		model.addAttribute("chambres", chambres);
-		int max = (int) Math.ceil(chambres.getTotalElements() / 5);
+		
+		int max = (int) Math.ceil((double) chambres.getTotalElements() / 5);
 		model.addAttribute("max", max);
+		
+		boolean isAjax = isAjax(request);
 		if (isAjax) {
 			return "ajax/list-chambres";
 		}
@@ -53,6 +65,14 @@ public class ChambresController {
 		}
 		model.addAttribute("chambre", chambre);
 		return isAjax ? "ajax/chambre :: success" : "chambre-details";
+	}
+	
+	@PostMapping(path = "/chambres")
+	public String search(
+		
+	) {
+		System.out.println("call");
+		return "ajax/list-chambres";
 	}
 	
 	/**

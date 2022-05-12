@@ -1,3 +1,33 @@
+function search(arrivee, depart, adultes, enfants) {
+	return {
+		formData: {
+			arrivee,
+			depart,
+			adultes,
+			enfants,
+		},
+		loading: false,
+		isLoading() { return this.loading === true },
+		async submitForm() {
+			this.loading = true;
+			var response = await fetch("/chambres", {
+				method: "POST",
+				body: JSON.stringify(this.formData),
+				headers: {
+					"X-Requested-With": "XMLHttpRequest",
+				},
+			});
+			if (response.status >= 200 && response.status < 300) {
+				console.log('yes')
+				console.log(response)
+			} else {
+				console.log('no')
+			}
+			this.loading = false;
+		}
+	};
+}
+
 function loadMore(maxSize) {
 	return {
 		max: maxSize - 1,
@@ -30,7 +60,7 @@ function loadMore(maxSize) {
 	};
 }
 
-function modalData() {
+function modal() {
 	return {
 		show: false,
 		loading: true,

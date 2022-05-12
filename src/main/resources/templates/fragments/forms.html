@@ -1,0 +1,11 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--/* start field errors */-->
+<div th:fragment="fielderrors" th:if="${#fields.hasErrors()}" class="z-20 relative mb-4">
+	<ul class="list-disc pl-5 space-y-1 text-red-700">
+	    <li th:each="err,iter : ${#fields.errors()}" th:text="${err}"></li>
+	</ul>
+</div>
+<!--/* end field errors */-->
+
+</html>
