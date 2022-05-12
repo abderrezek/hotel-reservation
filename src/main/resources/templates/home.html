@@ -12,7 +12,8 @@
 			background-size: cover;
  		}
 	</style>
-	<link th:fragment="links" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<!-- 	<link th:fragment="links" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
+	<link th:fragment="links" rel="stylesheet" th:href="@{/css/flatpickr.min.css}">
 </head>
 <body th:replace="layout/layout :: common_body('accueil', ~{::content}, ~{}, ~{::script})">
 
@@ -61,8 +62,10 @@
 		<!-- end header -->
 	</div>
 	
-	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-	<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+	<script th:src="@{/js/flatpickr/flatpickr.min.js}"></script>
+	<script th:src="@{/js/flatpickr/fr.js}"></script>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
+<!-- 	<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script> -->
 	<script th:src="@{/js/dates.js}"></script>
 </body>
 </html>

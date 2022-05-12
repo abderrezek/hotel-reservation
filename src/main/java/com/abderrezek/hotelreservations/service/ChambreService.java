@@ -3,6 +3,8 @@ package com.abderrezek.hotelreservations.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.abderrezek.hotelreservations.entity.Chambre;
@@ -19,6 +21,11 @@ public class ChambreService implements IChambreService {
 	@Override
 	public List<Chambre> getAll() {
 		return chambreRepository.findAll();
+	}
+
+	@Override
+	public Page<Chambre> getAll(Pageable pageable) {
+		return chambreRepository.findAll(pageable);
 	}
 
 	@Override
