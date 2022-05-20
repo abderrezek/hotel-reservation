@@ -2,11 +2,10 @@
 	th:fragment="item"
 	xmlns:th="http://www.thymeleaf.org"
 	class="flex flex-col sm:flex-row py-4"
-	th:x-data="|{ url: '${chambre.slug}' }|"
->	
+>
 
-	<div @click="$dispatch('open-modal', { url })" class="relative w-full sm:w-52 overflow-hidden group cursor-pointer">
-		<img src="#" class="h-full object-cover">
+	<div x-data th:x-bind="|showModal('${chambre.slug}')|" class="relative w-full sm:w-52 overflow-hidden group cursor-pointer">
+		<img th:src="@{/img/barre-sem/01.jpg}" class="h-full object-cover">
 		<span
 			class="absolute right-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out text-white px-1"
 			style="background-color: rgba(0, 0, 0, .5);"

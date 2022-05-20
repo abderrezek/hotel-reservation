@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.abderrezek.hotelreservations.entity.Chambre;
+import com.abderrezek.hotelreservations.entity.Reservation;
 import com.abderrezek.hotelreservations.repository.ChambreRepository;
 
 import lombok.AllArgsConstructor;
@@ -36,6 +37,12 @@ public class ChambreService implements IChambreService {
 	@Override
 	public Optional<Chambre> getBySlug(String slug) {
 		return chambreRepository.findBySlug(slug);
+	}
+
+	@Override
+	public List<Chambre> getAllPersonnesSatisfait(int personnes) {
+		return chambreRepository
+				.findAllByPersonnesGreaterThanEqual(personnes);
 	}
 
 }

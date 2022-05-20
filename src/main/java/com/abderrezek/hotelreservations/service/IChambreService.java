@@ -10,8 +10,10 @@ import com.abderrezek.hotelreservations.entity.Chambre;
 
 public interface IChambreService {
 	
+	List<Chambre> getAllPersonnesSatisfait(int personnes);
 	List<Chambre> getAll();
 	Page<Chambre> getAll(Pageable pageable);
+	
 	Optional<Chambre> getBySlug(String slug);
 	
 	Chambre create(Chambre chambre);	

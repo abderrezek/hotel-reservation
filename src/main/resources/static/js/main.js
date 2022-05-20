@@ -1,7 +1,17 @@
-function navbarData() {
-	return {
+document.addEventListener('alpine:init', function() {
+	Alpine.data('navbar', () => ({
 		show: false,
-		toggleVisibility() { this.show = !this.show; },
-		isVisible() { return this.show === true; }
-	};
-}
+		toggle: {
+			['@click']() { this.show = !this.show; },
+		},
+		toggleShow: {
+			[':class']() { return this.show || 'hidden'; },
+		},
+		iconShow: {
+			['x-show']() { return !this.show; },
+		},
+		iconHide: {
+			['x-show']() { return this.show; },
+		},
+	}));
+});

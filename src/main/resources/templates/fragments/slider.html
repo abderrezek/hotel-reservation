@@ -1,0 +1,77 @@
+<div xmlns:th="http://www.thymeleaf.org" x-data>
+	
+	<!--/* slider */-->
+	<div class="mb-2">
+		<div class="embla" x-data="slide" x-bind="changeEvent">
+			<div x-ref="viewport" class="embla__viewport">
+				<div class="embla__container">
+					<div class="embla__slide">
+						<div class="embla__slide__inner">
+							<img
+								class="embla__slide__img"
+								th:src="@{'/img/'+${chambre.slug}+'/01.jpg'}"
+							>
+						</div>
+					</div>
+				    <div class="embla__slide">
+					    <div class="embla__slide__inner">
+							<img
+								class="embla__slide__img"
+								th:src="@{'/img/'+${chambre.slug}+'/02.jpg'}"
+							>
+						</div>
+					</div>
+				    <div class="embla__slide">
+				    	<div class="embla__slide__inner">
+							<img
+								class="embla__slide__img"
+								th:src="@{'/img/'+${chambre.slug}+'/03.jpg'}"
+							>
+						</div>
+				    </div>
+				    <div class="embla__slide">
+				    	<div class="embla__slide__inner">
+							<img
+								class="embla__slide__img"
+								th:src="@{'/img/'+${chambre.slug}+'/04.jpg'}"
+							>
+						</div>
+				    </div>
+				</div>
+			</div>
+			
+			<!-- buttons -->
+			<button x-bind="prevBtn" type="button" class="embla__button embla__button--prev">
+				<svg class="embla__button__svg" viewBox="137.718 -1.001 366.563 643.999">
+		          <path
+		            d="M428.36 12.5c16.67-16.67 43.76-16.67 60.42 0 16.67 16.67 16.67 43.76 0 60.42L241.7 320c148.25 148.24 230.61 230.6 247.08 247.08 16.67 16.66 16.67 43.75 0 60.42-16.67 16.66-43.76 16.67-60.42 0-27.72-27.71-249.45-249.37-277.16-277.08a42.308 42.308 0 0 1-12.48-30.34c0-11.1 4.1-22.05 12.48-30.42C206.63 234.23 400.64 40.21 428.36 12.5z"
+		          ></path>
+		        </svg>
+			</button>
+			<button x-bind="nextBtn" type="button" class="embla__button embla__button--next">
+				<svg class="embla__button__svg" viewBox="0 0 238.003 238.003">
+		          <path
+		            d="M181.776 107.719L78.705 4.648c-6.198-6.198-16.273-6.198-22.47 0s-6.198 16.273 0 22.47l91.883 91.883-91.883 91.883c-6.198 6.198-6.198 16.273 0 22.47s16.273 6.198 22.47 0l103.071-103.039a15.741 15.741 0 0 0 4.64-11.283c0-4.13-1.526-8.199-4.64-11.313z"
+		          ></path>
+		        </svg>
+			</button>
+		</div>
+	</div>
+	
+	<!--/* imgs minature */-->
+	<div class="flex space-x-2">
+		<button class="w-14 h-12" x-bind="SlideChange(0)">
+			<img th:src="@{'/img/'+${chambre.slug}+'/01.jpg'}" class="block w-full h-full" width="58" height="48">
+		</button>
+		<button class="w-14 h-12" x-bind="SlideChange(1)">
+			<img th:src="@{'/img/'+${chambre.slug}+'/02.jpg'}" class="block w-full h-full" width="58" height="48">
+		</button>
+		<button class="w-14 h-12" x-bind="SlideChange(2)">
+			<img th:src="@{'/img/'+${chambre.slug}+'/03.jpg'}" class="block w-full h-full" width="58" height="48">
+		</button>
+		<button class="w-14 h-12" x-bind="SlideChange(3)">
+			<img th:src="@{'/img/'+${chambre.slug}+'/04.jpg'}" class="block w-full h-full" width="58" height="48">
+		</button>
+	</div>
+	
+</div>
