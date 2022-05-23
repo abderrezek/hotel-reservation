@@ -1,6 +1,5 @@
 package com.abderrezek.hotelreservations.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.abderrezek.hotelreservations.entity.Chambre;
-import com.abderrezek.hotelreservations.entity.Reservation;
 import com.abderrezek.hotelreservations.form.SearchForm;
 import com.abderrezek.hotelreservations.service.IChambreService;
 import com.abderrezek.hotelreservations.service.IReservationService;

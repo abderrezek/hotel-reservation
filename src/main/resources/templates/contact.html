@@ -11,13 +11,14 @@
 			background-size: cover;
 			object-position: 50% 0%;
 		}
+		#map { z-index: 1; }
 	</style>
 	 <link th:fragment="links" rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
 	   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
 	   crossorigin=""/>
-
+	
 </head>
-<body th:replace="layout/layout :: common_body('contact', ~{::content}, ~{}, ~{::scripts})">
+<body th:replace="layout/layout :: common_body('contact', ~{::content}, ~{::modals}, ~{::scripts})">
 
 	<div th:fragment="content">
 		<div class="container mx-auto">
@@ -60,24 +61,127 @@
 								</li>
 							</ul>
 							
-							<form class="" action="#" method="post">
+							<form
+								action="#"
+								th:action="@{/contact}"
+								method="post"
+								th:object="${contact}"
+								x-data="ContactForm"
+								@submit.prevent="submit"
+								@focusout="change"
+								@input="change"
+								@validate.window="validate"
+							>	
 								<div class="flex flex-col sm:flex-row space-x-0 sm:space-x-2 mb-2">
 									<div class="mb-2 sm:mb-0 space-y-2">
-										<input class="w-full" name="nom" type="text" placeholder="Nom">
-										<input class="w-full" name="email" type="text" placeholder="E-mail">
-										<input class="w-full" name="telephone" type="text" placeholder="Téléphone">
+										<div>
+											<input
+												class="w-full"
+												th:field="*{nom}"
+												type="text"
+												placeholder="Nom"
+												th:errorclass="error-input"
+												:class="{'error-input': nom.error}"
+												data-rules='["required"]'
+												:disabled="loading"
+											>
+											<p x-show="nom.error" x-text="nom.error" class="text-sm text-red-700"></p>
+											<p th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}" class="text-sm text-red-700"></p>
+										</div>
+										<div>
+											<input
+												class="w-full"
+												th:field="*{email}"
+												type="text"
+												placeholder="E-mail"
+												th:errorclass="error-input"
+												:class="{'error-input': email.error}"
+												data-rules='["required", "email"]'
+												:disabled="loading"
+											>
+											<p x-show="email.error" x-text="email.error" class="text-sm text-red-700"></p>
+											<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-sm text-red-700"></p>
+										</div>
+										<div>
+											<input
+												class="w-full"
+												th:field="*{telephone}"
+												type="text"
+												placeholder="Téléphone"
+												th:errorclass="error-input"
+												:class="{'error-input': telephone.error}"
+												data-rules='["required"]'
+												:disabled="loading"
+											>
+											<p x-show="telephone.error" x-text="telephone.error" class="text-sm text-red-700"></p>
+											<p th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" class="text-sm text-red-700"></p>
+										</div>
 									</div>
-									<textarea class="w-full" name="message" placeholder="Rédigez votre message ici..."></textarea>
+									<div>
+										<textarea
+											class="w-full h-36"
+											th:field="*{message}"
+											placeholder="Rédigez votre message ici..."
+											th:errorclass="error-input"
+											:class="{'error-input': message.error}"
+											data-rules='["required"]'
+											:disabled="loading"
+										></textarea>
+										<p x-show="message.error" x-text="message.error" class="text-sm text-red-700"></p>
+										<p th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="text-sm text-red-700"></p>
+									</div>
 								</div>
 								
-								<button class="block ml-auto focus:outline-none text-sm font-light bg-yellow-500 py-2 px-1.5">Envoyer</button>
-								
+								<div class="flex flex-row-reverse items-center justify-between">
+									<button
+										type="submit"
+										class="block focus:outline-none text-sm font-light bg-yellow-500 py-2 px-3 inline-flex items-center justify-center"
+										:disabled="loading"
+									>
+										<svg role="status" x-show="loading" x-cloak class="inline mr-1 w-5 h-5 text-white animate-spin fill-gray-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+										    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+										    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+										</svg>
+										Envoyer
+									</button>
+									<div>
+										<p x-text="result" x-show="result !== ''" x-cloak class="text-green-500"></p>
+										<p th:if="${msgResult != null}" th:text="${msgResult}" class="text-green-500"></p>									
+									</div>
+								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<div x-data="modal" th:fragment="modals">
+		<!-- start modal -->
+		<div
+			class="fixed z-20 inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
+			x-bind="isVisible"
+			x-cloak
+		>
+			<div x-bind="hideAway" class="max-w-sm p-6 bg-white">
+				<div>
+					<p x-text="error" x-show="error !== ''" class="text-sm text-red-700"></p>
+					<div class="flex align-center justify-center space-x-2 font-bold text-2xl mb-2">
+						<span x-text="number1"></span>
+						<span>+</span>
+						<span x-text="number2"></span>
+						<span>=</span>
+						<input class="w-16 border border-gray-500" x-model="result">
+					</div>
+					<button
+						class="w-full py-2 px-4 bg-yellow-500 text-white font-bold"
+						@click="envoyer"
+					>Envoyer</button>
+				</div>
+			</div>
+		</div>
+		<!-- end modal -->
 	</div>
 	
 	<th:block th:fragment="scripts">
@@ -93,7 +197,9 @@
 			    .setLatLng([36.1884, 1.5328])
 			    .setContent("Chez soi")
 			    .openOn(map);
-		</script>	
+		</script>
+		<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@3/dist/iodine.min.js"></script>
+		<script th:src="@{/js/contact.js}"></script>
 	</th:block>
 </body>
 </html>
