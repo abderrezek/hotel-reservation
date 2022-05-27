@@ -128,6 +128,14 @@ document.addEventListener('alpine:init', () => {
 				throw new Error('Quelque chose ne va pas');
 			})
 			.then((content) => {
+//				var sEmbla = document.createElement('script');
+//				sEmbla.src = "https://unpkg.com/embla-carousel/embla-carousel.umd.js";
+//				document.body.appendChild(sEmbla);
+//				
+//				var sSlide = document.createElement('script');
+//				sSlide.src = "/js/slide.js";
+//				document.body.appendChild(sSlide);
+				
 				document.getElementById('modal-content').innerHTML = content;
 			})
 			.catch((errs) => {

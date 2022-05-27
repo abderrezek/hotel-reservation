@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout ::common_header(~{::title}, ~{}, ~{})">
+	<title th:fragment="title">Découvrir</title>
+</head>
+<body th:replace="layout/layout :: common_body('decouvrir', ~{::content}, ~{}, ~{})">
+
+	<div th:fragment="content">
+		order
+	</div>
+	
+</body>
+</html>
