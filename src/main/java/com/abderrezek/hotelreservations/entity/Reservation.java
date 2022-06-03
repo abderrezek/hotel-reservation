@@ -38,6 +38,16 @@ public class Reservation {
 	private int personnes;
 	@Column(nullable = false)
 	private boolean habite;
+	@Column(nullable = false)
+	private double total;
+	@Column(nullable = false)
+	private String email;
+	@Column(nullable = false)
+	private String telephone;
+	@Column(nullable = false)
+	private String nom;
+	@Column(nullable = false)
+	private String prenom;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "chambre_id", nullable = false)

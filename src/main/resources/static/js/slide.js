@@ -42,6 +42,7 @@ document.addEventListener('alpine:init', function() {
 		},
 		changeEvent: {
 			['@change.window']() {
+				// cannot read property index of undifiened
 				this.embla.scrollTo(this.$event.detail.index);
 				this.$dispatch('paginate', { currentSlide: this.embla.selectedScrollSnap() });
 			},

@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="success" class="mt-2">
+	<p class="flex justify-between items-center">
+		<span>Nuit(s) x <span th:text="${jours}"></span></span>
+		<span th:text="|$${prixJours}|"></span>
+	</p>
+	
+	<p class="flex justify-between items-center">
+		<span>TVA(21%)</span>
+		<span>$52.50</span>
+	</p>
+	
+	<p class="flex justify-between items-center">
+		<span>Total</span>
+		<span class="font-bold" th:text="|$${total}|"></span>
+	</p>
+</div>
+
+<div th:fragment="faild" class="mt-2">
+	<ul class="list-disc text-red-700">
+		<li th:each="err : ${errors}" th:text="${err.getDefaultMessage()}"></li>
+	</ul>
+</div>
+
+<div th:fragment="noChambre" class="mt-2">
+	no chambre
+</div>
+
+</html>

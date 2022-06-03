@@ -1,8 +1,11 @@
 package com.abderrezek.hotelreservations.controller;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.abderrezek.hotelreservations.entity.Chambre;
 import com.abderrezek.hotelreservations.form.SearchForm;
@@ -32,6 +36,9 @@ public class ChambresController {
 	private final IChambreService chambreService;
 	private final IReservationService reservationService;
 
+	/**
+	 * Get All Chambres
+	 */
 	@GetMapping(path = "/chambres")
 	public Object index(Pageable pageable, Model model, HttpServletRequest request) {
 		boolean fromAccueil = false;
@@ -63,6 +70,9 @@ public class ChambresController {
 		return "chambres";
 	}
 	
+	/**
+	 * Get detail Chambre
+	 */
 	@GetMapping(path = "/chambre/{slug}")
 	public String show(@PathVariable String slug, Model model, HttpServletRequest request) {
 		Chambre chambre = chambreService.getBySlug(slug).orElse(null);
@@ -80,6 +90,84 @@ public class ChambresController {
 		return isAjax ? "ajax/chambre :: success" : "chambre-details";
 	}
 	
+	/**
+	 * Get prix chambre
+	 */
+	@PostMapping(path = "/chambre/{slug}/calc")
+	public String getPrixReserver(
+		@PathVariable String slug,
+		HttpServletRequest request,
+		Model model,
+		@Validated @ModelAttribute SearchForm searchForm,
+		BindingResult bindingResult
+	) {
+		Chambre chambre = chambreService.getBySlug(slug).orElse(null);
+		boolean isAjax = isAjax(request);
+		
+		if (chambre == null && isAjax) {
+			return "ajax/reserver :: noChambre";
+		}
+		if (bindingResult.hasErrors() && isAjax) {
+			model.addAttribute("errors", bindingResult.getAllErrors());
+			return "ajax/reserver :: faild";
+		}
+		// calc days between two date
+		long joursInMills = Math.abs(searchForm.getArrivee().getTime() - searchForm.getDepart().getTime());
+		long jours = TimeUnit.DAYS.convert(joursInMills, TimeUnit.MILLISECONDS);
+		
+		// calc prix jours
+		double prixJours = jours * chambre.getPrix();
+		
+		// calc total
+		double total = prixJours + 52.50;
+		
+		model.addAttribute("jours", jours);
+		model.addAttribute("prixJours", String.format("%.2f", prixJours));
+		model.addAttribute("total", String.format("%.2f", total));
+		return "ajax/reserver :: success";
+	}
+	
+	/**
+	 * reserver
+	 */
+	@PostMapping(path = "/chambre/{slug}")
+	public String reserver(
+		@PathVariable String slug,
+		@Validated @ModelAttribute("chambreForm") SearchForm searchForm,
+		BindingResult bindingResult,
+		Model model,
+		HttpSession session
+	) {
+		Chambre chambre = chambreService.getBySlug(slug).orElse(null);
+		
+		if (chambre == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		model.addAttribute("chambre", chambre);
+		model.addAttribute("chambreForm", searchForm);
+		if (bindingResult.hasErrors()) {
+			return "chambre-details";
+		}
+		// calc days between two date
+		long joursInMills = Math.abs(searchForm.getArrivee().getTime() - searchForm.getDepart().getTime());
+		long jours = TimeUnit.DAYS.convert(joursInMills, TimeUnit.MILLISECONDS);
+		// calc prix jours
+		double prixJours = jours * chambre.getPrix();	
+		// calc total
+		double total = prixJours + 52.50;
+		// go to order page
+		session.setAttribute("ADULTES", searchForm.getAdultes());
+		session.setAttribute("JOURS", jours);
+		session.setAttribute("SOUS_TOTAL", prixJours);
+		session.setAttribute("TOTAL", total);
+		session.setAttribute("SEARCH_FORM", searchForm);
+		session.setAttribute("SLUG", slug);
+		return "redirect:/order";
+	}
+	
+	/**
+	 * Search Form Chambres
+	 */
 	@PostMapping(path = "/chambres")
 	public String search(
 		@Validated @ModelAttribute("chambre") SearchForm searchForm,

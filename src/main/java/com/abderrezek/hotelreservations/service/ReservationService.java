@@ -2,6 +2,7 @@ package com.abderrezek.hotelreservations.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,11 @@ public class ReservationService implements IReservationService {
 	public List<Reservation> getAllReserveret(Date arrivee, Date depart) {
 		return reservationRepository
 				.findAllByArriveeGreaterThanEqualAndDepartLessThanEqualAndHabiteFalse(arrivee, depart);
+	}
+
+	@Override
+	public Optional<Reservation> findById(Long id) {
+		return reservationRepository.findById(id);
 	}
 	
 }

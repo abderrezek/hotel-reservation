@@ -1,9 +1,13 @@
 package com.abderrezek.hotelreservations.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +26,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "chambres")
-public class Chambre {
+public class Chambre implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +49,8 @@ public class Chambre {
 	@Embedded
 	private Confort confort;
 	private String description;
+	@ElementCollection
+	private List<String> images = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "chambre", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<Reservation> reservations;

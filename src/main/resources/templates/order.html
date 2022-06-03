@@ -1,12 +1,169 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout ::common_header(~{::title}, ~{}, ~{})">
-	<title th:fragment="title">Découvrir</title>
+<head th:replace="layout/layout ::common_header(~{::title}, ~{::links}, ~{})">
+	<meta charset="utf-8">
+	<title th:fragment="title">Order</title>
+	<style th:fragment="links">
+		#se-loger {
+			background: url([[@{/img/se-loger.jpg}]]) no-repeat;
+			background-attachment: fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			object-position: 50% 0%;
+		}
+	</style>
 </head>
-<body th:replace="layout/layout :: common_body('decouvrir', ~{::content}, ~{}, ~{})">
+<body th:replace="layout/layout :: common_body('', ~{::content}, ~{}, ~{::scripts})">
 
 	<div th:fragment="content">
-		order
+		<div class="container mx-auto">
+			<div class="text-center my-8">
+				<h3 class="uppercase text-lg mb-3">chambres</h3>
+				<p class="font-light">Paragraphe. Cliquez ici pour ajouter votre propre texte. Cliquez sur "Modifier Texte" ou double-cliquez ici pour ajouter votre contenu et personnaliser les polices. Déplacez-moi où vous le souhaitez sur votre page. Expliquez ici votre parcours et présentez votre activité à vos visiteurs.</p>
+			</div>
+		</div>
+		
+		<div id="se-loger" class="py-12">
+			<h2 class="text-center font-bold text-4xl md:text-7xl uppercase text-white mb-12">se loger</h2>
+			
+			<div class="bg-white py-5">
+				<div class="container mx-auto px-4">
+					<div class="flex flex-col md:flex-row space-x-0 md:space-x-4 ">
+						<!--/* Coordonnées de l'hôte */-->
+						<div class="w-full md:w-3/5">
+							<h3 class="py-1 border-b border-gray-700 text-xl text-gray-700 font-bold">Coordonnées de l'hôte</h3>
+							
+							<form
+								action="#"
+								th:action="@{/order}"
+								th:object="${order}"
+								method="post"
+								class="space-y-0 md:space-y-2 mt-2"
+								x-data="OrderForm"
+								@submit="submit"
+							>
+								<div class="flex flex-col md:flex-row space-x-0 md:space-x-4">
+									<div class="w-full md:w-1/2">
+										<label :class="{'text-red-300': prenom.error}" class="block mb-1" th:classappend="${#fields.hasErrors('prenom')}?text-red-300" for="prenom">Prénom</label>
+										<input
+											class="block w-full border border-gray-500 p-1"
+											th:field="*{prenom}"
+											th:errorclass="error-input"
+											type="text"
+											data-rules='["required"]'
+											:class="{'error-input': prenom.error}"
+											:disabled="loading"
+										>
+									</div>
+									<div class="w-full md:w-1/2">
+										<label :class="{'text-red-300': nom.error}" class="block mb-1" th:classappend="${#fields.hasErrors('nom')}?text-red-300" for="nom">Nom de famille</label>
+										<input
+											class="block w-full border border-gray-500 p-1"
+											th:field="*{nom}"
+											th:errorclass="error-input"
+											type="text"
+											data-rules='["required"]'
+											:class="{'error-input': nom.error}"
+											:disabled="loading"
+										>
+									</div>
+								</div>
+								<div class="flex flex-col md:flex-row space-x-0 md:space-x-4">
+									<div class="w-full md:w-1/2">
+										<label :class="{'text-red-300': email.error}" class="block mb-1" th:classappend="${#fields.hasErrors('email')}?text-red-300" for="email">Adresse e-mail</label>
+										<input
+											class="block w-full border border-gray-500 p-1"
+											th:field="*{email}"
+											th:errorclass="error-input"
+											type="text"
+											data-rules='["required", "email"]'
+											:class="{'error-input': email.error}"
+											:disabled="loading"
+										>
+									</div>
+									<div class="w-full md:w-1/2">
+										<label :class="{'text-red-300': telephone.error}" class="block mb-1" th:classappend="${#fields.hasErrors('telephone')}?text-red-300" for="telephone">Numéro de téléphone</label>
+										<input
+											class="block w-full border border-gray-500 p-1"
+											th:field="*{telephone}"
+											th:errorclass="error-input"
+											type="text"
+											data-rules='["required", "phoneNumber"]'
+											:class="{'error-input': telephone.error}"
+											:disabled="loading"
+										>
+									</div>
+								</div>
+								<div class="w-full">
+									<label class="block mb-1" th:classappend="${#fields.hasErrors('demandes')}?text-red-300" for="demandes">Demandes particulières</label>
+									<textarea
+										class="w-full"
+										th:field="*{demandes}"
+										th:errorclass="error-input"
+										rows="3"
+										:disabled="loading"
+									></textarea>
+								</div>
+								<p>En complétant cette réservation, je confirme avoir lu et accepté les Conditions de réservation.</p>
+								<button
+									class="outline-none block md:ml-auto w-full md:w-1/2 rounded-full py-2 px-4 bg-blue-500 text-white w-full"
+									type="submit"
+								>Continue</button>
+							</form>
+						</div>
+						
+						<!--/* Résumé De La Réservation */-->
+						<div class="w-full md:w-2/5 bg-gray-100 pb-1 pb-1.5 px-3">
+							<h3 class="py-1 border-b border-gray-700 text-xl text-gray-700 font-bold">Résumé De La Réservation</h3>
+							
+							<div class="mt-2">
+								<img th:src="@{'/img/'+${session.SLUG}+'/01.jpg'}">
+								
+								<p class="flex flex-col md:flex-row justify-between">
+									<span>Type de chambre</span>
+									<span class="font-bold">Suite Junior</span>
+								</p>
+								<div class="flex justify-between">
+									<p>Dates</p>
+									<p class="flex flex-col text-center">
+										<span class="font-bold" th:text="${#dates.format(session.SEARCH_FORM.arrivee, 'dd/MM/yyyy')}">Mai 30-31, 2022</span>
+										<span>à</span>
+										<span class="font-bold" th:text="${#dates.format(session.SEARCH_FORM.depart, 'dd/MM/yyyy')}">Mai 30-31, 2022</span>
+									</p>
+								</div>
+								<p class="flex flex-col md:flex-row justify-between">
+									<span>Nombre de nuits</span>
+									<span class="font-bold" th:text="${jours}"></span>
+								</p>
+								<p class="flex flex-col md:flex-row justify-between">
+									<span>Hôtes</span>
+									<span class="font-bold" th:text="|${session.SEARCH_FORM.adultes} Adultes|">1 Adultes</span>
+								</p>
+								<hr class="my-2">
+								<p class="flex flex-col md:flex-row justify-between">
+									<span>Sous-total</span>
+									<span class="font-bold" th:text="|$${#numbers.formatDecimal(session.SOUS_TOTAL, 0, 2)}|">$100</span>
+								</p>
+								<p class="flex flex-col md:flex-row justify-between">
+									<span>TVA (21%)</span>
+									<span class="font-bold">$21</span>
+								</p>
+								<hr class="my-2">
+								<p class="flex flex-col md:flex-row justify-between">
+									<span class="font-bold">Total</span>
+									<span class="font-bold" th:text="|$${#numbers.formatDecimal(session.TOTAL, 0, 2)}|">$121</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+	<th:block th:fragment="scripts">
+		<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@3/dist/iodine.min.js"></script>	
+		<script th:src="@{/js/order.js}"></script>
+	</th:block>
 </body>
 </html>

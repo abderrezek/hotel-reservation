@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout ::common_header(~{::title}, ~{}, ~{})">
+	<meta charset="utf-8">
+	<title th:fragment="title">Félicitations</title>
+</head>
+<body th:replace="layout/layout :: common_body('', ~{::content}, ~{}, ~{})">
+
+	<div th:fragment="content">
+		<div class="container mx-auto px-4 py-8">
+			<div class="flex align-center justify-between">
+				<h1 class="font-bold text-3xl mb-2">Félicitations !</h1>
+<!-- 				<a -->
+<!-- 				target="_blank" -->
+<!-- 					th:href="@{/felicitaion/download}" -->
+<!-- 					class="outline-none text-white rounded bg-blue-500 py-2 px-3" -->
+<!-- 				>Imprimer</a> -->
+			</div>
+			<p>
+				<span th:text="|${reservation.nom} ${reservation.prenom}|"></span>, votre réservation a bien été effectuée.
+			</p>
+			
+			<hr class="text-black my-8">
+			
+			<div class="flex flex-col md:flex-row justify-between">
+				<div>
+					<p class="px-4 py-2 border border-black mb-4">
+						Une fois votre réservation confirmée, vous recevrez un email.
+					</p>
+					<p>
+						<span>Date d'arrivée</span>
+						<span class="inline-block ml-6" th:text="${reservation.arrivee}"></span>
+					</p>
+					<p class="mt-4 mb-8">
+						<span>Date de départ</span>
+						<span class="inline-block ml-4" th:text="${reservation.depart}"></span>
+					</p>
+					<h2>Coordonnées de l'hôtel</h2>
+					<hr class="text-black mt-2 mb-4">
+					<p>
+						<span>Numéro de téléphone</span>
+						<span class="inline-block ml-4" th:text="${reservation.telephone}"></span>
+					</p>
+					<p>
+						<span>E-mail</span>
+						<span class="inline-block ml-32" th:text="${reservation.email}"></span>
+					</p>
+				</div>
+				
+				<div class="w-1/3 border border-black">
+					<img class="w-full" th:src="@{'/img/'+${session.SLUG}+'/01.jpg'}">
+					
+					<div class="p-4">
+						<p>
+							<span>Type de chambre</span>
+							<span>Suite Junior</span>
+						</p>
+						<p>
+							<span>Nombre de nuits</span>
+							<span class="ml-8" th:text="${session.JOURS}">14</span>
+						</p>
+						<p>
+							<span>Hôtes</span>
+							<span class="ml-8" th:text="|${reservation.personnes} Adultes|">1</span>
+						</p>
+						<hr>
+						<p>
+							<span>Sous-total</span>
+							<span class="ml-8" th:text="|$${#numbers.formatDecimal(session.SOUS_TOTAL, 0, 2)}|">14</span>
+						</p>
+						<p>
+							<span>TVA (21%)</span>
+							<span class="ml-8">$21</span>
+						</p>
+						<hr>
+						<p>
+							<span>Total</span>
+							<span class="ml-8" th:text="|$${#numbers.formatDecimal(session.TOTAL, 0, 2)}|">1</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<!-- 	<script th:fragment="scripts" th:src="@{/js/felicitation.js}"></script> -->
+
+</body>
+</html>

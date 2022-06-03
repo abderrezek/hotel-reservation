@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
+import javax.persistence.Column;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -55,7 +57,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 	private Chambre randomChambre() {
 		String nom = faker.company().name();
 		String slug = slugify.slugify(nom);
-		double prix = Double.parseDouble(faker.commerce().price(4.00, 295.00).replace(',', '.'));
+		double prix = price(4.00, 295.00);
 		int personnes = faker.number().randomDigitNotZero();
 		double taille = faker.number().randomDouble(0, 20, 100);
 		int lits = faker.number().randomDigitNotZero();
@@ -70,7 +72,18 @@ public class DatabaseInitializer implements CommandLineRunner {
 		);
 		String description = faker.lorem().sentence(10);
 		Set<Reservation> reservations = new HashSet<>();
-		return new Chambre(null, nom, slug, prix, personnes, taille, lits, confort, description, reservations);
+		List<String> images = List.of(
+			"/img/" + slug + "/01.jpg",
+			"/img/" + slug + "/02.jpg",
+			"/img/" + slug + "/03.jpg",
+			"/img/" + slug + "/04.jpg"
+		);
+		return new Chambre(
+			null, nom, slug, prix,
+			personnes, taille, lits,
+			confort, description,
+			images, reservations
+		);
 	}
 	
 	private Reservation randomReservation(Chambre chambre) {
@@ -88,7 +101,21 @@ public class DatabaseInitializer implements CommandLineRunner {
 		
 		int personnes = faker.number().numberBetween(1, 7);
 		boolean habite = faker.bool().bool();
-		return new Reservation(null, arrivee, depart, personnes, habite, chambre);
+		double total = price(4.00, 295.00);
+		String email = faker.internet().emailAddress();
+		String telephone = faker.phoneNumber().phoneNumber();
+		String nom = faker.name().firstName();
+		String prenom = faker.name().lastName();
+		return new Reservation(
+			null, arrivee, depart,
+			personnes, habite, total,
+			email, telephone,
+			nom, prenom, chambre
+		);
+	}
+	
+	private Double price(double min, double max) {
+		return Double.parseDouble(faker.commerce().price(min, max).replace(',', '.'));
 	}
 
 }
