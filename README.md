@@ -16,8 +16,11 @@ I'm using Spring boot with:
   <br>- <a href="https://github.com/slugify/slugify">Slugify</a>
   <br>
   2- Frontend:
+  <br>
 I'm using:
+  <br>
   - AlpineJS
+  <br>
   - tailwindcss
   
 </p>
