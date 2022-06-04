@@ -55,4 +55,13 @@ public class Chambre implements Serializable {
 	@OneToMany(mappedBy = "chambre", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<Reservation> reservations;
 
+	@Override
+	public String toString() {
+		return "Chambre [id="+id+",nom="+nom+","
+				+ "slug="+slug+",prix="+prix+",personnes="+personnes+","
+				+ "taille="+taille+",lits="+lits+",confort="+confort+","
+				+ "description="+description+",images="+images+","
+				+ "reservations="+reservations+"]";
+	}
+	
 }

@@ -28,6 +28,8 @@ public class Reservation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+//	@Column(nullable = false, unique = true)
+//	private String code;
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date arrivee;
@@ -53,4 +55,12 @@ public class Reservation {
 	@JoinColumn(name = "chambre_id", nullable = false)
 	private Chambre chambre;
 
+	@Override
+	public String toString() {
+		return "Reservation [id="+id+",nom="+nom+","
+				+ "prenom="+prenom+",telephone="+telephone+",arrivee="+arrivee+","
+				+ "depart="+depart+",personnes="+personnes+","
+				+ "habite="+habite+",total="+total+",email="+email+"]";
+	}
+	
 }

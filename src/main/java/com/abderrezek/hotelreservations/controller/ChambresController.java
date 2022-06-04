@@ -40,8 +40,35 @@ public class ChambresController {
 	 * Get All Chambres
 	 */
 	@GetMapping(path = "/chambres")
-	public Object index(Pageable pageable, Model model, HttpServletRequest request) {
+	public Object index(Pageable pageable, Model model, HttpSession session, HttpServletRequest request) {		
 		boolean fromAccueil = false;
+		// form for search from acceuil or itself
+		SearchForm searchForm = new SearchForm(null, null, 1, 0);
+		if (session.getAttribute("searchForm") != null) {
+			searchForm = (SearchForm) session.getAttribute("searchForm");
+			fromAccueil = true;
+		}
+		model.addAttribute("fromAccueil", fromAccueil);
+		model.addAttribute("chambre", searchForm);
+		// from accueil
+		Page<Chambre> chambres = null;
+		if (session.getAttribute("chambres") != null) {
+			// get all chambres not entred
+			List<Chambre> listChambres = (List<Chambre>) session.getAttribute("chambres");
+			chambres = new PageImpl<>(listChambres, pageable, listChambres.size());
+		} else {
+			chambres = chambreService.getAll(pageable);
+		}
+		model.addAttribute("chambres", chambres);
+		int max = (int) Math.ceil((double) chambres.getTotalElements() / 5);
+		model.addAttribute("max", max);
+		
+		boolean isAjax = isAjax(request);
+		if (isAjax) {
+			return "ajax/list-chambres";
+		}
+		return "chambres";
+		/*boolean fromAccueil = false;
 		// form for search from acceuil or itself
 		SearchForm searchForm = new SearchForm(null, null, 1, 0);
 		if (model.getAttribute("searchForm") != null) {
@@ -67,7 +94,7 @@ public class ChambresController {
 		if (isAjax) {
 			return "ajax/list-chambres";
 		}
-		return "chambres";
+		return "chambres";*/
 	}
 	
 	/**

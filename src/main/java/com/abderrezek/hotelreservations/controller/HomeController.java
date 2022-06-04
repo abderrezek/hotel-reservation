@@ -2,6 +2,8 @@ package com.abderrezek.hotelreservations.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +38,8 @@ public class HomeController {
 	public String search(
 		@Validated @ModelAttribute("chambre") SearchForm searchForm,
 		BindingResult bindingResult,
-		RedirectAttributes redirectAttributes
+		RedirectAttributes redirectAttributes,
+		HttpSession session
 	) {
 		if (bindingResult.hasErrors()) {
 			return "home";
@@ -50,14 +53,15 @@ public class HomeController {
 		List<Long> reservations = listReservations.stream()
 				.map(r -> r.getChambre().getId())
 				.toList();
-		
+
 		List<Chambre> chambres = listChambres.stream()
 				.filter(c -> !reservations.contains(c.getId()))
 				.toList();
-
 		// pass variable
-		redirectAttributes.addFlashAttribute("chambres", chambres);
-		redirectAttributes.addFlashAttribute("searchForm", searchForm);
+		session.setAttribute("chambres", chambres);
+		session.setAttribute("searchForm", searchForm);
+//		redirectAttributes.addFlashAttribute("chambres", chambres);
+//		redirectAttributes.addFlashAttribute("searchForm", searchForm);
 		return "redirect:/chambres";
 	}
 
