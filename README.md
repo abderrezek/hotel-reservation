@@ -18,5 +18,6 @@ I'm using Spring boot with:
   2- Frontend:
 I'm using:
   - AlpineJS
+  - tailwindcss
   
 </p>
