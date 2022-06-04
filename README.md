@@ -15,9 +15,8 @@ I'm using Spring boot with:
   <br>- <a href="https://github.com/DiUS/java-faker">JavaFaker</a>
   <br>- <a href="https://github.com/slugify/slugify">Slugify</a>
   <br>
-  2- Frontend:
-  <br>
-I'm using:
+  2- Frontend: 
+  I'm using:
   <br>
   - AlpineJS
   <br>
